@@ -5,13 +5,18 @@ import {
   Body,
   HttpCode,
   HttpStatus,
+  UsePipes,
+  UseGuards,
+  Req,
+  Get,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBody, ApiResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service.js';
 import { RegisterDto, LoginDto } from './dto/auth.dto.js';
-import { UseGuards, Req, Get } from '@nestjs/common';
 import { GoogleGuard } from './guard/google.guard.js';
 import { type Response } from 'express';
+import { ZodValidationPipe } from 'src/lib/pipes/zod.pipe';
+import { RegisterSchema, LoginSchema } from '@repo/dto';
 
 /** Opsi default untuk cookie autentikasi */
 const COOKIE_NAME = 'cookie_token';
@@ -37,6 +42,7 @@ export class AuthController {
   @ApiBody({ type: RegisterDto })
   @ApiResponse({ status: 201, description: 'User registered successfully' })
   @ApiResponse({ status: 403, description: 'Email already in use' })
+  @UsePipes(new ZodValidationPipe(RegisterSchema)) // <-- TAMBAHAN BARU: Terapkan Pipe di sini
   async register(
     @Body() dto: RegisterDto,
     @Res({ passthrough: true }) res: Response,
@@ -55,6 +61,7 @@ export class AuthController {
   @ApiBody({ type: LoginDto })
   @ApiResponse({ status: 200, description: 'Login successful, returns JWT' })
   @ApiResponse({ status: 403, description: 'Invalid credentials' })
+  @UsePipes(new ZodValidationPipe(LoginSchema)) // <-- TAMBAHAN BARU: Terapkan Pipe di sini
   async login(
     @Body() dto: LoginDto,
     @Res({ passthrough: true }) res: Response,

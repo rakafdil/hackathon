@@ -39,6 +39,7 @@
     "@nestjs/swagger": "^11.2.6",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "@repo/dto": "workspace:*",
     "@types/passport-google-oauth20": "^2.0.17",
     "argon2": "^0.44.0",
     "axios": "^1.15.2",
@@ -61,7 +62,8 @@
     "rxjs": "^7.8.1",
     "@repo/constants": "workspace:*",
     "@repo/utils": "workspace:*",
-    "@repo/lib": "workspace:*"
+    "@repo/lib": "workspace:*",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

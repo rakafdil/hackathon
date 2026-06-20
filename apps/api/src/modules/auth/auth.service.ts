@@ -23,7 +23,6 @@ export class AuthService {
           email: dto.email,
           fullName: fullName,
           passwordHash: passwordHash,
-          // role akan otomatis default 'volunteer' dari schema
         },
       });
 

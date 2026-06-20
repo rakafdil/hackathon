@@ -6,8 +6,9 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
+import { IRegisterDto, ILoginDto } from '@repo/dto';
 
-export class RegisterDto {
+export class RegisterDto implements IRegisterDto {
   @ApiProperty({ example: 'user@example.com' })
   @IsEmail()
   @IsNotEmpty()
@@ -25,7 +26,7 @@ export class RegisterDto {
   fullName!: string;
 }
 
-export class LoginDto {
+export class LoginDto implements ILoginDto {
   @ApiProperty({ example: 'user@example.com' })
   @IsEmail()
   @IsNotEmpty()
