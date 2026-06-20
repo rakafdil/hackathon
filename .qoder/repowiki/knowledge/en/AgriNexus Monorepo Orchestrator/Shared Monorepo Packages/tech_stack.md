@@ -1,0 +1,1 @@
+Uses Zod for schema validation in `@repo/dto`, tsup for multi-format bundling in logic packages, and a flat ESLint v9 configuration with `typescript-eslint` and `eslint-plugin-turbo`.

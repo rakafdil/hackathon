@@ -1,0 +1,5 @@
+- The module is structured as a collection of internal workspace packages under `packages/`, each scoped with `@repo/` (e.g., `@repo/constants`, `@repo/ui`).
+- `@repo/typescript-config` and `@repo/eslint-config` serve as foundational build and linting baselines, consumed by other packages via `workspace:*` dependencies.
+- Logic packages (`constants`, `dto`, `lib`, `utils`) use `tsup` or `tsc` to bundle ESM/CJS outputs with type definitions, exporting via `package.json` `exports` fields.
+- `@repo/ui` provides raw React components with direct source exports, relying on consuming apps to handle bundling.
+- Dependency flow is strictly internal: `lib` depends on `constants`, while `dto` and `ui` depend on the shared config packages.

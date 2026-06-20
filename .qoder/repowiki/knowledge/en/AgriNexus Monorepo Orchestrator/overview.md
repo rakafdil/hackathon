@@ -1,0 +1,1 @@
+Orchestrates a polyglot microservices architecture using Turborepo for build caching and Docker Compose for runtime service discovery and networking.

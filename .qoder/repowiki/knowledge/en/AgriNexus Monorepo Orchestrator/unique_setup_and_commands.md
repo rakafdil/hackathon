@@ -1,0 +1,1 @@
+Run `pnpm dev` to start all TypeScript-based applications concurrently with hot-reloading via Turborepo. Use `docker compose up` to launch the full stack including the database, AI service, and Nginx proxy.

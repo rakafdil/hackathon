@@ -1,0 +1,3 @@
+- Each package exposes a centralized `src/index.ts` that re-exports all public members using `export * from './module'`.
+- Logic packages (`constants`, `lib`, `utils`) define strict TypeScript types alongside their runtime values, often using `as const` or `z.infer`.
+- UI components in `@repo/ui` are implemented as client-side React components using the `.tsx` extension and explicit `ReactNode` or `JSX.Element` return types.

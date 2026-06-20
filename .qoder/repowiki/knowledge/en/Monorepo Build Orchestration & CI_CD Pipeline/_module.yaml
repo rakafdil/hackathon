@@ -1,0 +1,15 @@
+schema_version: 1
+module_path: build_system
+title: Monorepo Build Orchestration & CI/CD Pipeline
+scope: []
+source_files:
+    - .github/workflows/ci-cd.yaml
+    - docker-compose.yaml
+    - turbo.json
+    - pnpm-workspace.yaml
+    - package.json
+    - apps/api/Dockerfile
+    - apps/web/Dockerfile
+    - apps/ai-service/Dockerfile
+depends_on: []
+related_to: []

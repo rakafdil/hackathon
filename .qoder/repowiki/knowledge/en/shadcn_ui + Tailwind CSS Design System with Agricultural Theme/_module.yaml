@@ -1,0 +1,17 @@
+schema_version: 1
+module_path: frontend_style
+title: shadcn/ui + Tailwind CSS Design System with Agricultural Theme
+scope: []
+source_files:
+    - apps/web/tailwind.config.js
+    - apps/web/components.json
+    - apps/web/app/globals.css
+    - apps/web/postcss.config.js
+    - apps/web/lib/utils.ts
+    - apps/web/components/ui/button.tsx
+    - apps/web/components/ui/card.tsx
+    - apps/web/app/(dashboard)/layout.tsx
+    - apps/web/app/(dashboard)/page.tsx
+    - apps/web/app/layout.tsx
+depends_on: []
+related_to: []

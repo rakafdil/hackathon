@@ -1,0 +1,4 @@
+- Uses Turborepo (`turbo.json`) to define a shared task graph with dependency-aware execution (`dependsOn: ["^build"]`) for TypeScript apps and packages.
+- Employs Docker Compose (`docker-compose.yaml`) to unify heterogeneous runtimes (Node.js/NestJS, Next.js, Python/FastAPI, PostgreSQL) into a single private network.
+- Centralizes external access via an Nginx reverse proxy (`nginx/default.conf`) that routes traffic to specific services based on path prefixes (`/api/`, `/ai/`), decoupling client-side routing from internal service ports.
+- Enforces workspace isolation through `pnpm-workspace.yaml`, separating application logic in `apps/` from shared contracts and utilities in `packages/`.

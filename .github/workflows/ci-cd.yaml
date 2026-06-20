@@ -48,9 +48,8 @@ jobs:
             - name: Run Linter
               run: pnpm turbo run lint
 
-            - name: Run Tests (Jika ada)
+            - name: Run Tests
               run: pnpm turbo run test
-              continue-on-error: true # Opsional: Ubah ke false jika test wajib pass 100%
 
     # Tahap 2: Continuous Deployment (CD) - Deploy ke Server
     deploy:
@@ -71,8 +70,8 @@ jobs:
                       # 2. Tarik kode terbaru dari Github
                       git pull origin main
 
-                      # 3. (Opsional) Jalankan Prisma db push jika skema DB berubah
-                      # docker compose exec -T api pnpm --filter api exec prisma db push
+                      # 3. Jalankan Prisma database migrations
+                      docker compose exec -T api pnpm --filter api exec prisma migrate deploy
 
                       # 4. Build ulang container yang berubah dan jalankan tanpa downtime
                       docker compose up -d --build

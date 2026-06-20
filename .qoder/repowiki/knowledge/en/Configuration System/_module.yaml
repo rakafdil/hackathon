@@ -1,0 +1,16 @@
+schema_version: 1
+module_path: configuration_system
+title: Configuration System
+scope: []
+source_files:
+    - docker-compose.yaml
+    - apps/api/.env.example
+    - apps/ai-service/.env.example
+    - apps/web/.env.example
+    - apps/api/src/app.module.ts
+    - apps/api/src/main.ts
+    - apps/api/src/modules/auth/strategy/jwt.strategy.ts
+    - apps/ai-service/main.py
+    - apps/web/lib/api-client.ts
+depends_on: []
+related_to: []

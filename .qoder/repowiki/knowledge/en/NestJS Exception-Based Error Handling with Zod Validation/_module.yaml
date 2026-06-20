@@ -1,0 +1,18 @@
+schema_version: 1
+module_path: error_handling
+title: NestJS Exception-Based Error Handling with Zod Validation
+scope: []
+source_files:
+    - apps/api/src/main.ts
+    - apps/api/src/lib/pipes/zod.pipe.ts
+    - apps/api/src/modules/auth/auth.service.ts
+    - apps/api/src/modules/users/users.service.ts
+    - apps/api/src/modules/auth/guard/roles.guard.ts
+    - apps/api/src/modules/auth/auth.controller.ts
+    - apps/web/lib/api-client.ts
+    - apps/web/app/(auth)/login/page.tsx
+    - apps/web/app/(auth)/register/page.tsx
+    - apps/web/middleware.ts
+    - packages/utils/src/async.ts
+depends_on: []
+related_to: []

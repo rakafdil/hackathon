@@ -1,0 +1,19 @@
+schema_version: 1
+module_path: dependency_management
+title: Polyglot Monorepo Dependency Management with pnpm Workspaces and uv
+scope: []
+source_files:
+    - package.json
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - .npmrc
+    - turbo.json
+    - apps/api/package.json
+    - apps/web/package.json
+    - apps/ai-service/pyproject.toml
+    - apps/ai-service/uv.lock
+    - apps/ai-service/requirements.txt
+    - packages/constants/package.json
+    - packages/ui/package.json
+depends_on: []
+related_to: []

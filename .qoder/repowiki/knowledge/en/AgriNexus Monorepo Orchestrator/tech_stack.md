@@ -1,0 +1,1 @@
+Turborepo for monorepo task orchestration, pnpm for workspace management, Docker Compose for multi-service containerization, and Nginx for reverse proxying.

@@ -1,0 +1,1 @@
+Provides shared TypeScript utilities, UI components, DTOs, constants, and build configurations for a Turborepo-based monorepo.

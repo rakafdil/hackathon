@@ -1,0 +1,299 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: en-US
+branch: main
+nodes_managed: true
+exported_at: "2026-06-20T17:19:08Z"
+modules:
+    "":
+        dir_name: AgriNexus Monorepo Orchestrator
+        title: AgriNexus Monorepo Orchestrator
+        scope:
+            - README.md
+            - SECURITY.md
+            - FIXES_SUMMARY.md
+            - .gitignore
+            - .dockerignore
+            - package.json
+            - pnpm-lock.yaml
+            - pnpm-workspace.yaml
+            - turbo.json
+            - docker-compose.yaml
+            - nginx/
+            - test-results/
+            - test-agrinexus.mjs
+            - .env.example
+            - .github\workflows\ci-cd.yaml
+            - .npmrc
+            - .qoder\repowiki\knowledge\en\AgriNexus Monorepo Orchestrator\Shared Monorepo Packages\_module.yaml
+            - .qoder\repowiki\knowledge\en\AgriNexus Monorepo Orchestrator\Shared Monorepo Packages\architecture_design.md
+            - .qoder\repowiki\knowledge\en\AgriNexus Monorepo Orchestrator\Shared Monorepo Packages\coding_conventions.md
+            - .qoder\repowiki\knowledge\en\AgriNexus Monorepo Orchestrator\Shared Monorepo Packages\overview.md
+            - .qoder\repowiki\knowledge\en\AgriNexus Monorepo Orchestrator\Shared Monorepo Packages\tech_stack.md
+            - .qoder\repowiki\knowledge\en\AgriNexus Monorepo Orchestrator\_module.yaml
+            - .qoder\repowiki\knowledge\en\AgriNexus Monorepo Orchestrator\architecture_design.md
+            - .qoder\repowiki\knowledge\en\AgriNexus Monorepo Orchestrator\overview.md
+            - .qoder\repowiki\knowledge\en\AgriNexus Monorepo Orchestrator\tech_stack.md
+            - .qoder\repowiki\knowledge\en\AgriNexus Monorepo Orchestrator\unique_setup_and_commands.md
+            - .qoder\repowiki\knowledge\en\_index.yaml
+            - .vscode\settings.json
+            - ai_assistant.html
+            - apps\ai-service\.env.example
+            - apps\ai-service\.python-version
+            - apps\ai-service\Dockerfile
+            - apps\ai-service\README.md
+            - apps\ai-service\main.py
+            - apps\ai-service\pyproject.toml
+            - apps\ai-service\requirements.txt
+            - apps\ai-service\uv.lock
+            - apps\api\.env
+            - apps\api\.env.example
+            - apps\api\.gitignore
+            - apps\api\.prettierrc
+            - apps\api\Dockerfile
+            - apps\api\README.md
+            - apps\api\eslint.config.mjs
+            - apps\api\nest-cli.json
+            - apps\api\package.json
+            - apps\api\prisma.config.ts
+            - apps\api\prisma\migrations\20260620123156_init\migration.sql
+            - apps\api\prisma\migrations\migration_lock.toml
+            - apps\api\prisma\schema.prisma
+            - apps\api\src\app.controller.spec.ts
+            - apps\api\src\app.controller.ts
+            - apps\api\src\app.module.ts
+            - apps\api\src\app.service.ts
+            - apps\api\src\lib\pipes\zod.pipe.ts
+            - apps\api\src\main.ts
+            - apps\api\src\modules\auth\auth.controller.spec.ts
+            - apps\api\src\modules\auth\auth.controller.ts
+            - apps\api\src\modules\auth\auth.module.ts
+            - apps\api\src\modules\auth\auth.service.spec.ts
+            - apps\api\src\modules\auth\auth.service.ts
+            - apps\api\src\modules\auth\decorator\get-user.decorator.ts
+            - apps\api\src\modules\auth\decorator\roles.decorator.ts
+            - apps\api\src\modules\auth\dto\auth.dto.ts
+            - apps\api\src\modules\auth\guard\google.guard.ts
+            - apps\api\src\modules\auth\guard\jwt.guard.ts
+            - apps\api\src\modules\auth\guard\roles.guard.ts
+            - apps\api\src\modules\auth\strategy\google.strategy.ts
+            - apps\api\src\modules\auth\strategy\jwt.strategy.ts
+            - apps\api\src\modules\prisma\prisma.module.ts
+            - apps\api\src\modules\prisma\prisma.service.ts
+            - apps\api\src\modules\users\dto\edit-user.dto.ts
+            - apps\api\src\modules\users\users.controller.spec.ts
+            - apps\api\src\modules\users\users.controller.ts
+            - apps\api\src\modules\users\users.module.ts
+            - apps\api\src\modules\users\users.service.spec.ts
+            - apps\api\src\modules\users\users.service.ts
+            - apps\api\test\app.e2e-spec.ts
+            - apps\api\test\jest-e2e.json
+            - apps\api\tsconfig.build.json
+            - apps\api\tsconfig.json
+            - apps\web\.env.example
+            - apps\web\.env.local
+            - apps\web\.gitignore
+            - apps\web\Dockerfile
+            - apps\web\README.md
+            - apps\web\app\(auth)\login\page.tsx
+            - apps\web\app\(auth)\register\page.tsx
+            - apps\web\app\(dashboard)\ai-assistant\page.tsx
+            - apps\web\app\(dashboard)\crop-risk\page.tsx
+            - apps\web\app\(dashboard)\layout.tsx
+            - apps\web\app\(dashboard)\page.tsx
+            - apps\web\app\(dashboard)\prices\page.tsx
+            - apps\web\app\(dashboard)\smart-planting\page.tsx
+            - apps\web\app\favicon.ico
+            - apps\web\app\fonts\GeistMonoVF.woff
+            - apps\web\app\fonts\GeistVF.woff
+            - apps\web\app\globals.css
+            - apps\web\app\layout.tsx
+            - apps\web\apps\api\.env
+            - apps\web\components.json
+            - apps\web\components\ui\alert-dialog.tsx
+            - apps\web\components\ui\avatar.tsx
+            - apps\web\components\ui\badge.tsx
+            - apps\web\components\ui\button.tsx
+            - apps\web\components\ui\card.tsx
+            - apps\web\components\ui\dialog.tsx
+            - apps\web\components\ui\dropdown-menu.tsx
+            - apps\web\components\ui\form.tsx
+            - apps\web\components\ui\input.tsx
+            - apps\web\components\ui\label.tsx
+            - apps\web\components\ui\navigation-menu.tsx
+            - apps\web\components\ui\progress.tsx
+            - apps\web\components\ui\select.tsx
+            - apps\web\components\ui\separator.tsx
+            - apps\web\components\ui\sheet.tsx
+            - apps\web\components\ui\table.tsx
+            - apps\web\components\ui\tabs.tsx
+            - apps\web\eslint.config.js
+            - apps\web\lib\api-client.ts
+            - apps\web\lib\react-query.ts
+            - apps\web\lib\utils.ts
+            - apps\web\middleware.ts
+            - apps\web\next-env.d.ts
+            - apps\web\next.config.js
+            - apps\web\package.json
+            - apps\web\postcss.config.js
+            - apps\web\public\file-text.svg
+            - apps\web\public\globe.svg
+            - apps\web\public\next.svg
+            - apps\web\public\turborepo-dark.svg
+            - apps\web\public\turborepo-light.svg
+            - apps\web\public\vercel.svg
+            - apps\web\public\window.svg
+            - apps\web\tailwind.config.js
+            - apps\web\tsconfig.json
+            - crop_risk.html
+            - dashboard_response.html
+            - nginx\default.conf
+            - packages\constants\package.json
+            - packages\constants\src\http-status.ts
+            - packages\constants\src\index.ts
+            - packages\constants\src\pagination.ts
+            - packages\constants\src\regex.ts
+            - packages\constants\src\roles.ts
+            - packages\constants\tsconfig.json
+            - packages\dto\package.json
+            - packages\dto\src\auth.schema.ts
+            - packages\dto\src\index.ts
+            - packages\dto\src\user.schema.ts
+            - packages\dto\tsconfig.json
+            - packages\eslint-config\README.md
+            - packages\eslint-config\base.js
+            - packages\eslint-config\next.js
+            - packages\eslint-config\package.json
+            - packages\eslint-config\react-internal.js
+            - packages\lib\package.json
+            - packages\lib\src\api-response.ts
+            - packages\lib\src\errors.ts
+            - packages\lib\src\index.ts
+            - packages\lib\src\pagination.ts
+            - packages\lib\tsconfig.json
+            - packages\typescript-config\base.json
+            - packages\typescript-config\nextjs.json
+            - packages\typescript-config\package.json
+            - packages\typescript-config\react-library.json
+            - packages\ui\eslint.config.mjs
+            - packages\ui\package.json
+            - packages\ui\src\button.tsx
+            - packages\ui\src\card.tsx
+            - packages\ui\src\code.tsx
+            - packages\ui\tsconfig.json
+            - packages\utils\package.json
+            - packages\utils\src\async.ts
+            - packages\utils\src\date.ts
+            - packages\utils\src\index.ts
+            - packages\utils\src\number.ts
+            - packages\utils\src\object.ts
+            - packages\utils\src\string.ts
+            - packages\utils\tsconfig.json
+            - prices.html
+            - root_response.html
+            - smart_planting.html
+            - test-results\.last-run.json
+        source_files: []
+        children:
+            - shared_packages
+        depends_on: []
+        related_to: []
+    build_system:
+        dir_name: Monorepo Build Orchestration & CI_CD Pipeline
+        title: Monorepo Build Orchestration & CI/CD Pipeline
+        scope: []
+        source_files:
+            - .github/workflows/ci-cd.yaml
+            - docker-compose.yaml
+            - turbo.json
+            - pnpm-workspace.yaml
+            - package.json
+            - apps/api/Dockerfile
+            - apps/web/Dockerfile
+            - apps/ai-service/Dockerfile
+        children: []
+        depends_on: []
+        related_to: []
+    configuration_system:
+        dir_name: Configuration System
+        title: Configuration System
+        scope: []
+        source_files:
+            - docker-compose.yaml
+            - apps/api/.env.example
+            - apps/ai-service/.env.example
+            - apps/web/.env.example
+            - apps/api/src/app.module.ts
+            - apps/api/src/main.ts
+            - apps/api/src/modules/auth/strategy/jwt.strategy.ts
+            - apps/ai-service/main.py
+            - apps/web/lib/api-client.ts
+        children: []
+        depends_on: []
+        related_to: []
+    dependency_management:
+        dir_name: Polyglot Monorepo Dependency Management with pnpm Workspaces and uv
+        title: Polyglot Monorepo Dependency Management with pnpm Workspaces and uv
+        scope: []
+        source_files:
+            - package.json
+            - pnpm-lock.yaml
+            - pnpm-workspace.yaml
+            - .npmrc
+            - turbo.json
+            - apps/api/package.json
+            - apps/web/package.json
+            - apps/ai-service/pyproject.toml
+            - apps/ai-service/uv.lock
+            - apps/ai-service/requirements.txt
+            - packages/constants/package.json
+            - packages/ui/package.json
+        children: []
+        depends_on: []
+        related_to: []
+    error_handling:
+        dir_name: NestJS Exception-Based Error Handling with Zod Validation
+        title: NestJS Exception-Based Error Handling with Zod Validation
+        scope: []
+        source_files:
+            - apps/api/src/main.ts
+            - apps/api/src/lib/pipes/zod.pipe.ts
+            - apps/api/src/modules/auth/auth.service.ts
+            - apps/api/src/modules/users/users.service.ts
+            - apps/api/src/modules/auth/guard/roles.guard.ts
+            - apps/api/src/modules/auth/auth.controller.ts
+            - apps/web/lib/api-client.ts
+            - apps/web/app/(auth)/login/page.tsx
+            - apps/web/app/(auth)/register/page.tsx
+            - apps/web/middleware.ts
+            - packages/utils/src/async.ts
+        children: []
+        depends_on: []
+        related_to: []
+    frontend_style:
+        dir_name: shadcn_ui + Tailwind CSS Design System with Agricultural Theme
+        title: shadcn/ui + Tailwind CSS Design System with Agricultural Theme
+        scope: []
+        source_files:
+            - apps/web/tailwind.config.js
+            - apps/web/components.json
+            - apps/web/app/globals.css
+            - apps/web/postcss.config.js
+            - apps/web/lib/utils.ts
+            - apps/web/components/ui/button.tsx
+            - apps/web/components/ui/card.tsx
+            - apps/web/app/(dashboard)/layout.tsx
+            - apps/web/app/(dashboard)/page.tsx
+            - apps/web/app/layout.tsx
+        children: []
+        depends_on: []
+        related_to: []
+    shared_packages:
+        dir_name: Shared Monorepo Packages
+        title: Shared Monorepo Packages
+        scope:
+            - packages/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []
