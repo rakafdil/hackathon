@@ -53,7 +53,7 @@ COPY --from=installer --chown=appuser:appuser /app/node_modules ./node_modules
 COPY --from=installer --chown=appuser:appuser /app/apps/api/node_modules ./apps/api/node_modules
 
 # 2. Salin packages berbagi (seperti @repo/dto) agar symlink pnpm tidak putus
-COPY --from=installer --chown=appuser:appuser /app/packages ./packages
+COPY --from=builder --chown=appuser:appuser /app/packages ./packages
 
 # 3. Salin hasil build dari builder ke posisi aslinya
 COPY --from=builder --chown=appuser:appuser /app/apps/api/dist ./apps/api/dist
