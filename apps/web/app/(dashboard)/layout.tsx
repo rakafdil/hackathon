@@ -9,6 +9,7 @@ import {
 import { CONFIG } from "@/lib/config";
 import { T } from "@/lib/design-tokens";
 import { cn } from "@/lib/utils";
+import { useUser } from "@/lib/user-context";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -16,6 +17,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [profileOpen, setProfileOpen] = useState(false);
+  const { user, loading: userLoading } = useUser();
 
   const activeItem = CONFIG.navItems.find((n) => n.href === pathname);
 
@@ -118,9 +120,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 className="w-7 h-7 rounded-full border flex items-center justify-center font-mono text-[11px] font-bold"
                 style={{ borderColor: `${T.primary}30`, background: `${T.primary}15`, color: T.primary }}
               >
-                U
+                {userLoading ? "..." : user?.fullName?.charAt(0).toUpperCase() || "U"}
               </div>
-              <span className="font-mono text-xs text-muted-foreground hidden sm:block">User</span>
+              <span className="font-mono text-xs text-muted-foreground hidden sm:block">
+                {userLoading ? "Loading..." : user?.fullName || "User"}
+              </span>
               <ChevronDown size={12} className="text-muted-foreground" />
             </button>
 
@@ -132,8 +136,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               >
                 {/* User info */}
                 <div className="p-3 border-b border-border">
-                  <p className="font-mono text-xs font-bold text-foreground">User</p>
-                  <p className="font-sans text-[11px] text-muted-foreground">user@example.com</p>
+                  <p className="font-mono text-xs font-bold text-foreground">
+                    {user?.fullName || "User"}
+                  </p>
+                  <p className="font-sans text-[11px] text-muted-foreground truncate">
+                    {user?.email || "user@example.com"}
+                  </p>
                 </div>
 
                 {/* Menu items */}

@@ -1,5 +1,5 @@
 import {
-  LayoutDashboard, BarChart2, MessageSquare, Settings,
+  LayoutDashboard, BarChart2, MessageSquare, Settings, User,
 } from "lucide-react";
 import { T } from "./design-tokens";
 
@@ -18,6 +18,7 @@ export const CONFIG = {
     { id: "overview", label: "Overview", icon: LayoutDashboard, href: "/overview" },
     { id: "analytics", label: "Analytics", icon: BarChart2, href: "/analytics" },
     { id: "assistant", label: "AI Assistant", icon: MessageSquare, href: "/ai-assistant" },
+    { id: "profile", label: "Profile", icon: User, href: "/profile" },
     { id: "settings", label: "Settings", icon: Settings, href: "/settings" },
   ],
 
