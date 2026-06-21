@@ -4,16 +4,21 @@ import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement> & { accent?: string }
+>(({ className, accent, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
+      "relative overflow-hidden border border-border bg-card text-card-foreground rounded-[var(--radius)]",
       className
     )}
     {...props}
-  />
+  >
+    {accent && (
+      <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: accent }} />
+    )}
+    {props.children}
+  </div>
 ))
 Card.displayName = "Card"
 
@@ -36,7 +41,7 @@ const CardTitle = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
+      "font-mono font-black text-foreground text-xl uppercase tracking-tight",
       className
     )}
     {...props}
@@ -50,7 +55,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("font-mono text-xs text-muted-foreground", className)}
     {...props}
   />
 ))
