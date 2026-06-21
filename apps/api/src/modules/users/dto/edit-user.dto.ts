@@ -1,10 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IEditUserDto } from '@repo/dto';
+/**
+ * EditUser DTO – Zod-first, Swagger-ready.
+ *
+ * Wraps the shared `EditUserSchema` from `@repo/dto` for Swagger integration.
+ */
+import { createZodDto } from 'nestjs-zod';
+import { EditUserSchema } from '@repo/dto';
 
-export class EditUserDto implements IEditUserDto {
-  @ApiProperty({ example: 'newemail@example.com', required: false })
-  email?: string;
-
-  @ApiProperty({ example: 'John Doe', required: false })
-  name?: string;
-}
+export class EditUserDto extends createZodDto(EditUserSchema) {}

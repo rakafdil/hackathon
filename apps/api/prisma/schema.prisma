@@ -1,8 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,21 +9,160 @@ datasource db {
   provider = "postgresql"
 }
 
+// ── Enums ──────────────────────────────────────────────────────────────────────
+// These are the SINGLE SOURCE OF TRUTH for all enum values.
+// DTOs in @repo/dto use `z.nativeEnum(PrismaEnum)` to stay in sync.
+
 enum UserRole {
-  admin
-  user
+  FARMER
+  BUYER
+  GOVERNMENT
 }
 
+enum CommodityType {
+  RICE
+  CORN
+  SOYBEAN
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum RecommendationType {
+  PLANT_NOW
+  DELAY
+}
+
+enum PriceStatus {
+  NORMAL
+  ANOMALY
+}
+
+// ── Models ─────────────────────────────────────────────────────────────────────
+
 model User {
-  id           String @id @default(uuid())
-  fullName     String @map("full_name")
-  email        String @unique
-  passwordHash String @map("password_hash")
+  id           String   @id @default(uuid())
+  fullName     String
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(FARMER)
 
-  role UserRole @default(user)
+  farmProfiles FarmProfile[]
+  aiChats      AIChat[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("users")
+}
+
+model Region {
+  id        String @id @default(uuid())
+  name      String @unique
+  province  String
+  latitude  Float  @default(-7.0)
+  longitude Float  @default(112.0)
+
+  farmProfiles FarmProfile[]
+  cropRisks    CropRisk[]
+  marketPrices MarketPrice[]
+  aiChats      AIChat[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("regions")
+}
+
+model FarmProfile {
+  id       String @id @default(uuid())
+  userId   String
+  regionId String
+
+  farmName  String?
+  landArea  Float
+  latitude  Float?
+  longitude Float?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  region Region @relation(fields: [regionId], references: [id])
+
+  recommendations AgroRecommendation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("farm_profiles")
+}
+
+model AgroRecommendation {
+  id               String             @id @default(uuid())
+  farmProfileId    String
+  commodity        CommodityType
+  plantingDate     DateTime
+  recommendation   RecommendationType
+  suitabilityScore Int
+  floodRisk        RiskLevel
+  droughtRisk      RiskLevel
+  estimatedYield   Float
+
+  farmProfile FarmProfile @relation(fields: [farmProfileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("agro_recommendations")
+}
+
+model CropRisk {
+  id       String @id @default(uuid())
+  regionId String
+
+  ndviScore   Float
+  temperature Float
+  rainfall    Float
+  floodRisk   RiskLevel
+  droughtRisk RiskLevel
+
+  region Region @relation(fields: [regionId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([regionId])
+  @@map("crop_risks")
+}
+
+model MarketPrice {
+  id        String        @id @default(uuid())
+  regionId  String
+  commodity CommodityType
+  price     Float
+  status    PriceStatus
+
+  region Region @relation(fields: [regionId], references: [id], onDelete: Cascade)
+
+  recordedAt DateTime @default(now())
+
+  @@index([regionId, commodity])
+  @@map("market_prices")
+}
+
+model AIChat {
+  id       String @id @default(uuid())
+  userId   String
+  question String
+  answer   String
+
+  commodity  CommodityType?
+  regionId   String?
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  region Region? @relation(fields: [regionId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("ai_chats")
 }

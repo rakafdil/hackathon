@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { EditUserDto } from './dto/edit-user.dto.js';
+import * as argon2 from 'argon2';
+import type { ICreateUser } from '@repo/dto';
 
 @Injectable()
 export class UsersService {
@@ -28,5 +30,32 @@ export class UsersService {
 
     const { passwordHash, ...userWithoutHash } = user;
     return userWithoutHash;
+  }
+
+  async createUser(dto: ICreateUser) {
+    const passwordHash = await argon2.hash(dto.password);
+    try {
+      const user = await this.prisma.user.create({
+        data: {
+          email: dto.email,
+          fullName: dto.fullName,
+          passwordHash,
+          role: dto.role ?? 'FARMER',
+        },
+      });
+
+      const { passwordHash: _, ...userWithoutHash } = user;
+      return userWithoutHash;
+    } catch (error) {
+      if (
+        error &&
+        typeof error === 'object' &&
+        'code' in error &&
+        error.code === 'P2002'
+      ) {
+        throw new ForbiddenException('Email already in use');
+      }
+      throw error;
+    }
   }
 }

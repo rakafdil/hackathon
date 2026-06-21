@@ -1,3 +1,23 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ *  AUTH CONTROLLER – UNIT TEST BLUEPRINT (Gold Standard)
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ *  PATTERNS DEMONSTRATED:
+ *  ┌──────────────────────────────────┬──────────────────────────────────────┐
+ *  │ Pattern                          │ Where                                │
+ *  ├──────────────────────────────────┼──────────────────────────────────────┤
+ *  │ Service mock via `useValue`      │ `{ provide: AuthService, useValue }` │
+ *  │ Express Response stub factory    │ `createMockResponse()`               │
+ *  │ Cookie assertion                 │ `res.cookie.toHaveBeenCalledWith()`  │
+ *  │ Redirect assertion               │ `res.redirect.toHaveBeenCalled()`    │
+ *  │ Negative assertion on failure    │ `res.cookie` NOT called on error     │
+ *  └──────────────────────────────────┴──────────────────────────────────────┘
+ *
+ *  NOTE: Guards (JwtGuard, GoogleGuard) and Pipes (nestjs-zod's global
+ *  ZodValidationPipe) are framework-level concerns tested in e2e tests.
+ *  Unit tests focus on the controller's delegation and side-effect logic.
+ */
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';

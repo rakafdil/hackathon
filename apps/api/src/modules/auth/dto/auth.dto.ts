@@ -1,39 +1,23 @@
-import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  MinLength,
-} from 'class-validator';
-import { IRegisterDto, ILoginDto } from '@repo/dto';
+/**
+ * Auth DTOs – Zod-first, Swagger-ready.
+ *
+ * These DTOs wrap the shared Zod schemas from `@repo/dto` using nestjs-zod's
+ * `createZodDto()`. This gives us:
+ *   1. Automatic Swagger/OpenAPI schema generation (no manual @ApiProperty)
+ *   2. Runtime validation via the global `ZodValidationPipe` from nestjs-zod
+ *   3. Single source of truth – the Zod schema in `@repo/dto`
+ *
+ * PATTERN: When adding new DTOs, always:
+ *   - Define the Zod schema in `packages/dto/src/` first
+ *   - Create a `createZodDto(schema)` wrapper here for Swagger integration
+ */
+import { createZodDto } from 'nestjs-zod';
+import { RegisterSchema, LoginSchema } from '@repo/dto';
 
-export class RegisterDto implements IRegisterDto {
-  @ApiProperty({ example: 'user@example.com' })
-  @IsEmail()
-  @IsNotEmpty()
-  email!: string;
+// ── Register DTO ──────────────────────────────────────────────────────────────
+// Swagger will auto-generate: { email: string, password: string, fullName?: string }
+export class RegisterDto extends createZodDto(RegisterSchema) {}
 
-  @ApiProperty({ example: 'password123', minLength: 6 })
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(6)
-  password!: string;
-
-  @ApiProperty({ example: 'John Doe', required: false })
-  @IsString()
-  @IsNotEmpty()
-  fullName!: string;
-}
-
-export class LoginDto implements ILoginDto {
-  @ApiProperty({ example: 'user@example.com' })
-  @IsEmail()
-  @IsNotEmpty()
-  email!: string;
-
-  @ApiProperty({ example: 'password123' })
-  @IsString()
-  @IsNotEmpty()
-  password!: string;
-}
+// ── Login DTO ─────────────────────────────────────────────────────────────────
+// Swagger will auto-generate: { email: string, password: string }
+export class LoginDto extends createZodDto(LoginSchema) {}

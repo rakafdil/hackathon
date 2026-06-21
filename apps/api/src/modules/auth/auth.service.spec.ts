@@ -1,3 +1,29 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ *  AUTH SERVICE – UNIT TEST BLUEPRINT (Gold Standard)
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ *  PATTERNS DEMONSTRATED:
+ *  ┌────────────────────────────┬─────────────────────────────────────────────┐
+ *  │ Pattern                    │ Where                                       │
+ *  ├────────────────────────────┼─────────────────────────────────────────────┤
+ *  │ jest.mock() for native mod │ `jest.mock('argon2', ...)` at top          │
+ *  │ Partial Prisma mock        │ `mockPrisma` with jest.fn() per method     │
+ *  │ DI via `useValue`          │ `{ provide: PrismaService, useValue: ... }` │
+ *  │ `beforeEach` reset         │ `jest.clearAllMocks()`                     │
+ *  │ Data factory functions     │ `makePrismaUser(overrides)` – DRY data     │
+ *  │ Error-path assertions      │ `rejects.toThrow(ForbiddenException)`       │
+ *  │ Nested describe blocks     │ One per method, happy + error paths        │
+ *  │ Call-count verification    │ `toHaveBeenCalledWith(...)` + exact args   │
+ *  └────────────────────────────┴─────────────────────────────────────────────┘
+ *
+ *  RULES:
+ *  • Every public method has ≥ 2 tests (happy path + ≥ 1 error path)
+ *  • Mocks are declared OUTSIDE `describe` so they’re shared; reset in `beforeEach`
+ *  • Factory functions (`makePrismaUser`) keep test bodies short and readable
+ *  • Enums from `@prisma/client` are used as plain strings in test data
+ *    (Prisma enums are now UPPERCASE strings: `'FARMER' | 'BUYER' | 'GOVERNMENT'`)
+ */
 import { Test, TestingModule } from '@nestjs/testing';
 import { ForbiddenException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -62,7 +88,7 @@ const makePrismaUser = (overrides = {}) => ({
   email: 'alice@example.com',
   fullName: 'Alice Wonderland',
   passwordHash: '$argon2id$hashed_password',
-  role: 'user',
+  role: 'FARMER',
   createdAt: new Date(),
   updatedAt: new Date(),
   ...overrides,
@@ -208,14 +234,14 @@ describe('AuthService', () => {
     });
 
     it('should include user role in the JWT payload', async () => {
-      const adminUser = makePrismaUser({ role: 'admin' });
+      const adminUser = makePrismaUser({ role: 'GOVERNMENT' });
       mockPrisma.user.findUnique.mockResolvedValue(adminUser);
       argon2.verify.mockResolvedValue(true);
 
       await service.login(makeLoginDto());
 
       expect(mockJwt.signAsync).toHaveBeenCalledWith(
-        expect.objectContaining({ role: 'admin' }),
+        expect.objectContaining({ role: 'GOVERNMENT' }),
         expect.any(Object),
       );
     });
@@ -260,22 +286,22 @@ describe('AuthService', () => {
 
   describe('signToken()', () => {
     it('should call jwt.signAsync with correct payload and return access_token', async () => {
-      const result = await service.signToken('uuid-1', 'bob@test.com', 'user');
+      const result = await service.signToken('uuid-1', 'bob@test.com', 'FARMER');
 
       expect(mockJwt.signAsync).toHaveBeenCalledWith(
-        { sub: 'uuid-1', email: 'bob@test.com', role: 'user' },
+        { sub: 'uuid-1', email: 'bob@test.com', role: 'FARMER' },
         { expiresIn: '1h', secret: 'test-secret' },
       );
       expect(result).toEqual({ access_token: 'mock.jwt.token' });
     });
 
     it('should default expiresIn to "1d" when JWT_EXPIRES_IN is not set', async () => {
-      mockConfig.get.mockImplementation((key: string): string | undefined => {
+      (mockConfig.get as jest.Mock).mockImplementation((key: string) => {
         if (key === 'JWT_SECRET') return 'test-secret';
         return undefined; // JWT_EXPIRES_IN not configured
       });
 
-      await service.signToken('uuid-1', 'bob@test.com', 'user');
+      await service.signToken('uuid-1', 'bob@test.com', 'FARMER');
 
       expect(mockJwt.signAsync).toHaveBeenCalledWith(
         expect.any(Object),

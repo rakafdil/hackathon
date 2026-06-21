@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { RequestMethod, ValidationPipe } from '@nestjs/common';
+import { RequestMethod } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { cleanupOpenApiDoc } from 'nestjs-zod';
 import { AppModule } from './app.module.js';
 import cookieParser from 'cookie-parser';
 
@@ -19,22 +20,21 @@ async function bootstrap() {
     exclude: [{ path: '', method: RequestMethod.GET }],
   });
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-    }),
-  );
-
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
-
+  // ── Swagger / OpenAPI setup ──────────────────────────────────────────────
+  // MUST be AFTER setGlobalPrefix so paths include /api prefix.
+  // SwaggerModule.setup registers its own internal routes (not affected by global prefix),
+  // so the UI will be at /api-docs (not /api/api-docs).
+  // `cleanupOpenApiDoc` post-processes the generated OpenAPI spec to properly
+  // handle Zod-generated schemas from nestjs-zod's `createZodDto()`.
   const config = new DocumentBuilder()
-    .setTitle('API')
-    .setDescription('Backend API')
+    .setTitle('Cafescope API')
+    .setDescription('Agro-Tech platform backend \u2013 Contract-First, Zod-validated')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, documentFactory);
+  const openApiDoc = SwaggerModule.createDocument(app, config);
+  cleanupOpenApiDoc(openApiDoc);
+  SwaggerModule.setup('api-docs', app, openApiDoc);
 
   await app.listen(process.env.PORT ?? 3001);
 }
