@@ -16,7 +16,7 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fullName || !email || !password || !confirmPassword) {
       setError("Semua field wajib diisi.");
@@ -28,10 +28,27 @@ export default function RegisterPage() {
     }
     setError("");
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ fullName, email, password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Registrasi gagal");
+      }
+
+      // Registrasi berhasil, redirect ke login
       router.push("/login");
-    }, 800);
+    } catch (err: any) {
+      setError(err.message || "Terjadi kesalahan. Silakan coba lagi.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

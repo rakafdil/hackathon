@@ -1,35 +1,48 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { User, Lock, Eye, EyeOff, AlertTriangle } from "lucide-react";
 import { T } from "@/lib/design-tokens";
 import { CONFIG } from "@/lib/config";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password) {
-      setError("Username dan password wajib diisi.");
+    if (!email || !password) {
+      setError("Email dan password wajib diisi.");
       return;
     }
     setError("");
     setLoading(true);
-    // Simulasi async — ganti dengan fetch/API call sesungguhnya
-    setTimeout(() => {
-      setLoading(false);
-      if (password === "demo") {
-        router.push("/overview");
-      } else {
-        setError('Username atau password salah. (hint: gunakan password "demo")');
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login gagal");
       }
-    }, 800);
+
+      // Login berhasil, redirect ke dashboard
+      router.push("/overview");
+    } catch (err: any) {
+      setError(err.message || "Terjadi kesalahan. Silakan coba lagi.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -51,19 +64,19 @@ export default function LoginPage() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Username */}
+          {/* Email */}
           <div>
             <label className="font-mono text-[11px] tracking-widest text-muted-foreground uppercase block mb-1.5">
-              Username
+              Email
             </label>
             <div className="relative">
               <User size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
               <input
-                type="text"
-                autoComplete="username"
-                placeholder="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                autoComplete="email"
+                placeholder="nama@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-secondary border border-border pl-9 pr-4 py-2.5 font-sans text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 rounded-sm transition-colors"
               />
             </div>
@@ -121,17 +134,13 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Demo credentials hint */}
-        <div className="mt-8 p-4 border border-dashed border-border rounded-sm">
-          <p className="font-mono text-[10px] tracking-widest text-muted-foreground uppercase mb-2">
-            Demo credentials
-          </p>
-          <p className="font-sans text-xs text-muted-foreground">
-            Username: <span className="font-mono text-foreground">siapapun</span>
-            {" · "}
-            Password: <span className="font-mono text-foreground">demo</span>
-          </p>
-        </div>
+        {/* Register link */}
+        <p className="font-sans text-sm text-center mt-6 text-muted-foreground">
+          Belum punya akun?{" "}
+          <Link href="/register" className="font-mono text-xs hover:underline" style={{ color: T.primary }}>
+            Daftar di sini
+          </Link>
+        </p>
       </div>
     </div>
   );
