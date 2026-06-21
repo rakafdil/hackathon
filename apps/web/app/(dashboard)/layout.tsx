@@ -24,9 +24,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     router.push(href);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/login");
+  const handleLogout = async () => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (err) {
+      console.error("Logout error:", err);
+    } finally {
+      router.push("/login");
+    }
   };
 
   const handleProfileClick = () => {
