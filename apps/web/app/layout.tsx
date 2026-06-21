@@ -10,7 +10,7 @@ import { UserProvider } from "@/lib/user-context";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id">
-      <body>
+      <body className="bg-background text-foreground antialiased">
         <QueryClientProvider client={queryClient}>
           <UserProvider>
             {children}
