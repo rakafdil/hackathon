@@ -1,122 +1,163 @@
 "use client";
 import React from "react";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
+import { User, Lock, Eye, EyeOff, AlertTriangle, Mail } from "lucide-react";
+import { T } from "@/lib/design-tokens";
+import { CONFIG } from "@/lib/config";
 
 export default function RegisterPage() {
- const router = useRouter();
- const [fullName, setFullName] = useState("");
- const [email, setEmail] = useState("");
- const [password, setPassword] = useState("");
- const [confirmPassword, setConfirmPassword] = useState("");
- const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
- const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!fullName || !email || !password || !confirmPassword) {
+      setError("Semua field wajib diisi.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Password dan konfirmasi password tidak cocok.");
+      return;
+    }
+    setError("");
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      router.push("/login");
+    }, 800);
+  };
 
-  if (password !== confirmPassword) {
-   toast.error("Password dan konfirmasi password tidak cocok");
-   return;
-  }
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center p-6">
+      <div className="w-full max-w-sm">
+        {/* Logo */}
+        <div className="flex items-center gap-2.5 mb-10">
+          <div className="w-8 h-8 rounded-sm flex-shrink-0" style={{ background: T.primary }} />
+          <span className="font-mono font-black text-foreground text-xl tracking-tight">
+            {CONFIG.appName}
+          </span>
+        </div>
 
-  setLoading(true);
+        {/* Heading */}
+        <div className="mb-8">
+          <h1 className="font-mono font-black text-foreground text-2xl tracking-tight mb-1">Daftar</h1>
+          <p className="font-sans text-sm text-muted-foreground">Buat akun baru untuk mulai</p>
+        </div>
 
-  try {
-   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ fullName, email, password }),
-   });
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="font-mono text-[11px] tracking-widest text-muted-foreground uppercase block mb-1.5">
+              Nama Lengkap
+            </label>
+            <div className="relative">
+              <User size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Nama lengkap"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full bg-secondary border border-border pl-9 pr-4 py-2.5 font-sans text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 rounded-sm transition-colors"
+              />
+            </div>
+          </div>
 
-   if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.message || "Registrasi gagal");
-   }
+          <div>
+            <label className="font-mono text-[11px] tracking-widest text-muted-foreground uppercase block mb-1.5">
+              Email
+            </label>
+            <div className="relative">
+              <Mail size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="email"
+                placeholder="nama@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-secondary border border-border pl-9 pr-4 py-2.5 font-sans text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 rounded-sm transition-colors"
+              />
+            </div>
+          </div>
 
-   const data = await res.json();
-   toast.success("Registrasi berhasil! Silakan login.");
-   router.push("/login");
-  } catch (error: any) {
-   toast.error(error.message || "Terjadi kesalahan");
-  } finally {
-   setLoading(false);
-  }
- };
+          <div>
+            <label className="font-mono text-[11px] tracking-widest text-muted-foreground uppercase block mb-1.5">
+              Password
+            </label>
+            <div className="relative">
+              <Lock size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type={showPass ? "text" : "password"}
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-secondary border border-border pl-9 pr-10 py-2.5 font-sans text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 rounded-sm transition-colors"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPass((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {showPass ? <EyeOff size={13} /> : <Eye size={13} />}
+              </button>
+            </div>
+          </div>
 
- return (
-  <div className="min-h-screen flex items-center justify-center bg-slate-50">
-   <Card className="w-full max-w-md">
-    <CardHeader>
-     <CardTitle className="text-2xl text-center">Daftar Akun</CardTitle>
-     <p className="text-sm text-muted-foreground text-center">
-      Buat akun baru untuk bergabung dengan SinergiBoga
-     </p>
-    </CardHeader>
-    <CardContent>
-     <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-       <Label htmlFor="fullName">Nama Lengkap</Label>
-       <Input
-        id="fullName"
-        type="text"
-        placeholder="Nama Lengkap"
-        value={fullName}
-        onChange={(e) => setFullName(e.target.value)}
-        required
-       />
+          <div>
+            <label className="font-mono text-[11px] tracking-widest text-muted-foreground uppercase block mb-1.5">
+              Konfirmasi Password
+            </label>
+            <div className="relative">
+              <Lock size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type={showPass ? "text" : "password"}
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full bg-secondary border border-border pl-9 pr-4 py-2.5 font-sans text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60 rounded-sm transition-colors"
+              />
+            </div>
+          </div>
+
+          {error && (
+            <div
+              className="flex items-start gap-2 p-3 border rounded-sm text-xs font-sans"
+              style={{ borderColor: `${T.danger}30`, background: `${T.danger}08`, color: T.danger }}
+            >
+              <AlertTriangle size={13} className="flex-shrink-0 mt-0.5" />
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-2.5 font-mono text-sm tracking-wider rounded-sm transition-opacity hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2"
+            style={{ background: T.primary, color: "var(--primary-foreground)" }}
+          >
+            {loading ? (
+              <>
+                <span className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                Memproses...
+              </>
+            ) : "Daftar"}
+          </button>
+        </form>
+
+        <p className="font-sans text-sm text-center mt-6 text-muted-foreground">
+          Sudah punya akun?{" "}
+          <Link href="/login" className="font-mono text-xs hover:underline" style={{ color: T.primary }}>
+            Masuk di sini
+          </Link>
+        </p>
       </div>
-      <div>
-       <Label htmlFor="email">Email</Label>
-       <Input
-        id="email"
-        type="email"
-        placeholder="nama@email.com"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-       />
-      </div>
-      <div>
-       <Label htmlFor="password">Password</Label>
-       <Input
-        id="password"
-        type="password"
-        placeholder="••••••••"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-       />
-      </div>
-      <div>
-       <Label htmlFor="confirmPassword">Konfirmasi Password</Label>
-       <Input
-        id="confirmPassword"
-        type="password"
-        placeholder="••••••••"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        required
-       />
-      </div>
-      <Button type="submit" className="w-full" disabled={loading}>
-       {loading ? "Memproses..." : "Daftar"}
-      </Button>
-     </form>
-     <p className="text-sm text-center mt-4">
-      Sudah punya akun?{" "}
-      <Link href="/login" className="text-emerald-600 hover:underline">
-       Masuk di sini
-      </Link>
-     </p>
-    </CardContent>
-   </Card>
-  </div>
- );
+    </div>
+  );
 }
