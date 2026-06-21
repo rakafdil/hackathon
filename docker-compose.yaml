@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
       POSTGRES_DB: ${DB_NAME:-hackathon_db}
     ports:
-      - "5432:5432"
+      - "5433:5432" 
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -15,7 +15,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-
   api:
     build:
       context: .
@@ -29,7 +28,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-
   ai-service:
     build:
       context: ./apps/ai-service

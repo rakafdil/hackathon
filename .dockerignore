@@ -2,6 +2,8 @@ node_modules
 apps/*/node_modules
 packages/*/node_modules
 .next
+apps/*/.next
 dist
+out
 .git
 .env

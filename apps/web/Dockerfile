@@ -8,18 +8,21 @@ RUN corepack enable
 FROM base AS builder
 WORKDIR /app
 
-# Salin seluruh monorepo agar packages/ui dan packages/config ikut terbawa
+# Salin seluruh monorepo
 COPY . .
 
-# Install dependencies & Build
+# INSTALL SEMUA DEPENDENSI (Termasuk devDependencies)
+# Jangan set NODE_ENV=production di sini!
 RUN pnpm install --frozen-lockfile
-ENV NODE_ENV=production
+
+# Build aplikasinya
 RUN pnpm --filter web build
 
 # 3. Tahap Runner (Menjalankan Aplikasi)
 FROM base AS runner
 WORKDIR /app
 
+# BARU SET NODE_ENV=production DI SINI
 ENV NODE_ENV=production
 ENV PORT=3000
 
