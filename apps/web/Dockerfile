@@ -13,7 +13,7 @@ COPY . .
 
 # INSTALL SEMUA DEPENDENSI (Termasuk devDependencies)
 # Jangan set NODE_ENV=production di sini!
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
 # Build aplikasinya
 RUN pnpm --filter web build
