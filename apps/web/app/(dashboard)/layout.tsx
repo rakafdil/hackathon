@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -57,7 +57,7 @@ export default function DashboardLayout({
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
                   isActive
                     ? "bg-emerald-50 text-emerald-700"
-                    : "hover:bg-slate-100"
+                    : "hover:bg-slate-100",
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -87,7 +87,9 @@ export default function DashboardLayout({
             </SheetTrigger>
             <SheetContent side="left" className="w-64">
               <div className="mb-8 mt-4">
-                <h1 className="text-2xl font-bold text-emerald-600">SinergiBoga</h1>
+                <h1 className="text-2xl font-bold text-emerald-600">
+                  SinergiBoga
+                </h1>
               </div>
               <nav className="space-y-1">
                 {navItems.map((item) => {

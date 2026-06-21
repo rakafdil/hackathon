@@ -7,12 +7,11 @@ import { PrismaClient } from '@prisma/client';
 @Injectable()
 export class PrismaService
   extends PrismaClient
-  implements OnModuleInit, OnModuleDestroy {
+  implements OnModuleInit, OnModuleDestroy
+{
   constructor() {
     const isProduction = process.env.NODE_ENV === 'production';
-    const connectionString = isProduction
-      ? process.env.DATABASE_URL_NEON
-      : process.env.DATABASE_URL;
+    const connectionString = process.env.DATABASE_URL;
     if (!connectionString) {
       throw new Error(
         isProduction
@@ -24,7 +23,7 @@ export class PrismaService
     try {
       const dbHost = new URL(connectionString).host;
       // Log which database target is used without exposing credentials.
-      console.log('[DB] using', isProduction ? 'NEON' : 'LOCAL', dbHost);
+      console.log('[DB] using LOCAL', dbHost);
     } catch {
       console.warn('[DB] invalid database URL');
     }

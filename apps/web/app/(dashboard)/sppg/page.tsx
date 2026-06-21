@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -158,7 +158,7 @@ export default function SPPGPage() {
               </TableBody>
             </Table>
             <Button className="mt-4 bg-emerald-600 hover:bg-emerald-700" onClick={handleCreateOrder}>
-              Kirim Order ke {wfqCandidates[0].name}
+              Kirim Order ke {wfqCandidates[0]?.name}
             </Button>
           </div>
         </CardContent>
